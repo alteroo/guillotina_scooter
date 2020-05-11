@@ -9,7 +9,7 @@ databases:
     dsn: postgresql://postgres@localhost:5432/guillotina
     read_only: false
 host: localhost
-port: 8080
+port: 8081
 root_user:
   password: root
 auth_extractors:

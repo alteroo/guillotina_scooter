@@ -7,16 +7,13 @@ class IPatientIndex(interfaces.IItem):
     text = schema.Text()
     first_name = schema.Text()
     last_name = schema.Text()
-    middle_names = schema.List(
-        value_type=schema.Dict(key_type=schema.Text(), value_type=schema.Text())
-    )
+    middle_names = schema.List(value_type=schema.Text())
     date_of_birth = schema.Date()
     addresses = schema.List(
         value_type=schema.Dict(key_type=schema.Text(), value_type=schema.Text())
     )
-    activities = fields.BucketListField(
+    activities = schema.List(
         value_type=schema.Dict(key_type=schema.Text(), value_type=schema.Text()),
-        bucket_len=5000,
     )
     id_data = schema.List(
         value_type=schema.Dict(key_type=schema.Text(), value_type=schema.Text())
