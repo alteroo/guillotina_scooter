@@ -38,7 +38,7 @@ after_success:
   - pip install coveralls
   - coveralls
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker build -t aleroo/guillotina_scooter:master .;
+    docker build -t alteroo/guillotina_scooter:master .;
     echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME"  --password-stdin;
     docker push alteroo/guillotina_scooter:master;
     fi
