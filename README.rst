@@ -14,7 +14,7 @@ Installation
 
 This example will use python virtual env::
 
-  python3.7 -m venv .
+  python3 -m venv .
   ./bin/pip install -e .
 
 
@@ -23,9 +23,9 @@ Running
 
 Most simple way to get running::
 
-  ./bin/guillotina
+  ./bin/g
 
 
 Running Postgresql Server:
 
-    docker run --rm -e POSTGRES_DB=guillotina -e POSTGRES_USER=guillotina -p 127.0.0.1:5432:5432 --name postgres postgres:9.6
+    docker run --rm -e POSTGRES_DB=guillotina -e POSTGRES_USER=guillotina -e POSTGRES_HOST_AUTH_METHOD=trust -p 127.0.0.1:5432:5432 --name postgres postgres:9.6
