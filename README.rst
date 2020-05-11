@@ -22,7 +22,7 @@ This example will use python virtual env::
 Running
 -------
 
-Most simple way to get running::
+The most simple way to get running::
 
   ./bin/g
 
