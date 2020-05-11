@@ -1,3 +1,4 @@
+.vscode/
 *.pyc
 .eggs
 __pycache__
