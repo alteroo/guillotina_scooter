@@ -38,9 +38,3 @@ Demos with Docker Compose
 
 This launches a complete scooter master patient index. You can use the restful api to add new
 patients.
-
-Create your first patient
-```
-
-
-```
