@@ -1,7 +1,8 @@
 Scooter MPI
 ==================================
 
-This is an experimental Master Patient Index built on Guillotina
+This is an experimental Master Patient Index. The goal is to make it possible
+to distribute the entire system using Docker.
 
 Dependencies
 ------------
