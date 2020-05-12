@@ -7,9 +7,9 @@ matrix:
   - name: "3.7 Dummy DB"
     python: "3.7"
     env: DATABASE=DUMMY
-  - name: "3.7 PG"
-    python: "3.7"
-    env: DATABASE=postgresql
+#  - name: "3.7 PG"
+#    python: "3.7"
+#    env: DATABASE=postgresql
 
 services:
   - postgresql
