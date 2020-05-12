@@ -37,5 +37,10 @@ Demos with Docker Compose
 
     docker-compose -f g-api/docker-compose.yaml up
 
-This launches a complete scooter master patient index. You can use the restful api to add new
+This launches a complete master patient index. You can use the restful api to add new
 patients.
+
+CI/CD
+-------
+
+Continuous integration is configured in the .travis.yml file

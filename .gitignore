@@ -1,5 +1,6 @@
 .vscode/
 *.pyc
+.coverage
 .eggs
 __pycache__
 *.egg-info

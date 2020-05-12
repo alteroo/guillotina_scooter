@@ -7,9 +7,9 @@ matrix:
   - name: "3.7 Dummy DB"
     python: "3.7"
     env: DATABASE=DUMMY
-  - name: "3.7 PG"
-    python: "3.7"
-    env: DATABASE=postgresql
+#  - name: "3.7 PG"
+#    python: "3.7"
+#    env: DATABASE=postgresql
 
 services:
   - postgresql
@@ -38,7 +38,7 @@ after_success:
   - pip install coveralls
   - coveralls
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker build -t aleroo/guillotina_scooter:master .;
+    docker build -t alteroo/guillotina_scooter:master .;
     echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME"  --password-stdin;
     docker push alteroo/guillotina_scooter:master;
     fi
@@ -46,3 +46,4 @@ after_success:
 branches:
   only:
   - master
+  - develop
