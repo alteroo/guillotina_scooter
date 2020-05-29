@@ -19,13 +19,23 @@ This example will use python virtual env::
   ./bin/pip install -e .
 
 
-Running
+## Running
 -------
 
 The most simple way to get running::
 
   ./bin/g
 
+Using Postman, cURL etc. create our container:
+```json
+{"@type": "Container", "id": "scooter"}
+```
+
+Finally, install Scooter.
+Do a `POST` request to the `/scooter/@addons` endpoint:
+```json
+{"id": "guillotina_scootermpi"}
+```
 
 Running Postgresql Server:
 

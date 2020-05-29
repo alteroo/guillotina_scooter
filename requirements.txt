@@ -4,8 +4,6 @@ Pillow
 plone.scale>=3.0.1
 guillotina_linkintegrity>=5.0.2
 guillotina_authentication
-fhirpath_guillotina
-
 uvicorn
 
 # Guillotina contrib
