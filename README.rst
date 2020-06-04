@@ -35,4 +35,4 @@ Enable Elasticsearch
 ===================
 
 Before using Elasticsearch you have to install it on your guillotina site.
-Do a `POST` request to the `/scooter/@caralog` endpoint with an empty JSON body.
+Do a ``POST`` request to the ``/scooter/@catalog`` endpoint with an empty JSON body.
