@@ -1,12 +1,17 @@
-FROM python:3.8.2
+FROM python:3.7.6-buster as builder
 
+# Init Postgres DB
+COPY scooter_base_db.sql /docker-entrypoint-initdb.d/
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY setup.py requirements.txt /app/
+RUN pip install -r requirements.txt && \
+  pip install -e .
 
+COPY . /app/
 
-COPY . .
+ENV PYTHONUNBUFFERRED=1
+ENV SENTRY=1
 
-RUN python setup.py develop
+ENTRYPOINT ["guillotina"]

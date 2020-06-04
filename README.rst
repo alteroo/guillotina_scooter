@@ -1,46 +1,38 @@
 Scooter MPI
-==================================
+***************
 
 This is an experimental Master Patient Index. The goal is to make it possible
 to distribute the entire system using Docker.
 
-Dependencies
-------------
+Quick start
+***********
 
-Python >= 3.7
+Clone this repository.
+===================
 
+Change into the project directory
+===================
 
-Installation
-------------
-
-This example will use python virtual env::
-
-  python3 -m venv .
-  ./bin/pip install -e .
+```cd guillotina_scooter```
 
 
-Running
--------
+Build & download docker images
+===================
 
-The most simple way to get running::
-
-  ./bin/g
+```docker-compose build```
 
 
-Running Postgresql Server:
+Run docker-compose
+===================
 
-    docker run --rm -e POSTGRES_DB=guillotina -e POSTGRES_USER=guillotina -e POSTGRES_HOST_AUTH_METHOD=trust -p 127.0.0.1:5432:5432 --name postgres postgres:9.6
+```docker-compose up```
 
-Demos with Docker Compose
---------------------------
-::
+This launches all the servers necessary to manage the patient index.
+Your app is now running on ```localhost:8080```
 
-    docker-compose -f g-api/docker-compose.yaml up
 
-This launches a complete master patient index. You can use the restful api to add new
-patients.
+Enable Elasticsearch
+===================
 
-CI/CD
--------
-
-Continuous integration is configured in the .travis.yml file
+Before using Elasticsearch you have to install it on your guillotina site.
+Do a ``POST`` request to the ``/scooter/@catalog`` endpoint with an empty JSON body.
