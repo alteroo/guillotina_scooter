@@ -2,10 +2,11 @@ from guillotina import schema, fields, configure
 from guillotina import interfaces
 from guillotina import content
 from .period import IPeriod
+from zope.interface import Interface
 import typing
 
 
-class IContactPoint(interfaces.IItem):
+class IContactPoint(Interface):
     """ Details of a Technology mediated contact point
     (phone, fax, email, etc.).
     Details for all kinds of technology mediated contact points for a person or

@@ -1,23 +1,25 @@
 import json
 import re
+import uuid
 
-from guillotina import configure
-from guillotina import content
-from guillotina import fields
-from guillotina import interfaces
-from guillotina import schema
+from elasticsearch_dsl import Q, Search
+from guillotina import (configure, content, fields, interfaces, schema,
+                        task_vars, utils)
 from guillotina.api import search
 from guillotina.api.content import DefaultPOST
-from guillotina import utils
 from guillotina.api.service import Service
+from guillotina.component import get_utility
 from guillotina.directives import index_field
+from guillotina.interfaces import IContainer
 from guillotina.response import HTTPBadRequest
+from guillotina_elasticsearch.interfaces import IElasticSearchUtility
+from guillotina_elasticsearch.queries import build_security_query
+from guillotina_elasticsearch.utility import ElasticSearchUtility
 
 from guillotina_scootermpi.content.address import IAddress
 from guillotina_scootermpi.content.contact_point import IContactPoint
 from guillotina_scootermpi.content.human_name import IHumanName
 from guillotina_scootermpi.content.scooter_tag import ScooterTag
-import uuid
 
 
 class IPatientFolder(interfaces.IFolder):
@@ -57,7 +59,7 @@ class IPatient(interfaces.IFolder):
 
     # Set primary_id as index_field to allow search
     # Constraint validates ID is 9 digits to match TRN format
-    index_field("primary_id", type="keyword")
+    index_field("primary_id", type="text")
     primary_id = schema.Text(constraint=lambda val: re.match("\d{9}", val) != None)
 
     secondary_id = schema.TextLine(required=False)
@@ -69,8 +71,7 @@ class IPatient(interfaces.IFolder):
 
 
 @configure.contenttype(schema=IPatient, type_name="Patient",
-                       allowed_types=["ScooterTag"],
-                       behaviors=["guillotina.behaviors.dublincore.IDublinCore"])
+                       allowed_types=["ScooterTag"])
 class Patient(content.Folder):
     """
     Patient
@@ -97,10 +98,21 @@ class AddUser(DefaultPOST):
         data = await self.request.json()
         primary_id: str = data["primary_id"]
         search_request = self.request
-        search_request.data = json.dumps({"type_name": "Patient",
-                                          "primary_id": f"{primary_id}"})
-        search_result = await search.search_post(self.context,
-                                                 search_request)
+        musts = [{"match": {"type_name": "Patient"}}]
+        el_query = {
+            "query": {
+                "query": {"bool": {"must": musts}},
+            }
+        }
+        musts.append({"match": {"primary_id": f"{primary_id}"}})
+        search_request.query = el_query
+
+        print(el_query)
+        # es = get_utility(IElasticSearchUtility)
+        # search_result = await IElasticSearchUtility.search_raw(task_vars.container.get(), el_query)
+        search_result = await search.search_get(task_vars.container.get(),
+                                                search_request)
+        print(search_result)
         if search_result['items_count'] == 0:
             return False
         else:

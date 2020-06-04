@@ -1,26 +1,54 @@
-version: '3'
+version: "3.2"
 services:
-  postgres:
-    image: postgres:10
-    container_name: postgres_test
+  scooter:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgresql
+      - elasticsearch
+    links:
+      - postgresql
+      - elasticsearch
+    restart: always
+  redis:
+    image: redis:5
+  postgresql:
+    image: postgres:11.6
     environment:
       POSTGRES_DB: guillotina
       POSTGRES_USER: guillotina
-      POSTGRES_PASSWORD: guillotina
-  redis:
-    image: redis:5
-    container_name: redis_test
-  guillotina:
-    image: alteroo/guillotina_cmxperiment
-    command: sh -c "sleep 5 && g -c /usr/src/app/config.yml"
+      mem_limit: 512m
+    volumes:
+      # - ./volumes/pgdata:/var/lib/postgresql/data
+      - ./scooter_base_db.sql:/docker-entrypoint-initdb.d/scooter_base_db.sql
+    restart: always
+  # postgres:
+  #   image: postgres:10
+  #   volumes:
+  #     - ./scooter_base_db.sql:/docker-entrypoint-initdb.d/scooter_base_db.sql
+  #     - scooter_pg_db:/var/lib/postgresql/data
+  #   ports:
+  #     - 5432:5432
+  #   environment:
+  #     POSTGRES_DB: guillotina
+  #     POSTGRES_USER: guillotina
+  #     POSTGRES_PASSWORD: guillotina
+  #     POSTGRES_HOST_AUTH_MEHTOD: trust
+  #   restart: always
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
     ports:
-      - '8080:8081'
-    links:
-      - postgres
-      - redis
+      - 9200:9200
     volumes:
-      - ${PWD}/g-api/config.yaml:/usr/src/app/config.yml
-  init:
-    image: guillotina/initializer:latest
-    volumes:
-      - ${PWD}/g-api/init.yaml:/usr/src/app/config.yaml
+      - ./volumes/esdata:/usr/share/elasticsearch/data
+    environment:
+      "xpack.security.enabled": null
+      "cluster.routing.allocation.disk.threshold_enabled": "false"
+      "discovery.type": "single-node"
+      "http.host": "0.0.0.0"
+      "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+    restart: always
+volumes:
+  scooter_pg_db:
+  scooter_es_data:

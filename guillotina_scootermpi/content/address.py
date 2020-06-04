@@ -1,9 +1,10 @@
 from guillotina import schema, fields, configure
 from guillotina import interfaces
 from guillotina import content
+from zope.interface import Interface
 
 
-class IAddress(interfaces.IItem):
+class IAddress(Interface):
 
     # Address Line (Street name, number, PO Box etc)
     address_line = schema.List(value_type=schema.Text())

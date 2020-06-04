@@ -1,7 +1,7 @@
 from guillotina import schema, configure, content, interfaces
 from guillotina.api.service import Service
 from guillotina.directives import index_field
-from guillotina.api.content import DefaultPOST, DefaultPATCH
+from guillotina.api.content import DefaultPOST, DefaultPATCH, DefaultGET
 import uuid
 import json
 

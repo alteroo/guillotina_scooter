@@ -1,0 +1,13 @@
+volumes
+*.db
+*.db.blobs
+venv
+bin
+lib
+**/__pycache__
+docker-compose.yaml
+Dockerfile
+shell.nix
+.vscode
+.pytest_cache
+.git

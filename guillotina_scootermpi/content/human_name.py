@@ -1,9 +1,11 @@
 from guillotina import schema, fields, configure
 from guillotina import interfaces
 from guillotina import content
+from guillotina.directives import index_field
+from zope.interface import Interface
 
 
-class IHumanName(interfaces.IItem):
+class IHumanName(Interface):
     """ Interface defining Human name.
     """
     last_name = schema.Text()
